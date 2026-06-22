@@ -16,3 +16,10 @@ out/
 
 # macOS
 .DS_Store
+
+# Claude Code
+.claude/
+
+# CodeGraph
+.codegraph/
+EOF
