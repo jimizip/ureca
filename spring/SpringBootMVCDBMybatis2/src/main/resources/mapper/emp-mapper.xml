@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- emp crud -->    
+<mapper namespace="com.mycom.myapp.dao.EmpDao">
+
+	<!-- mapUnderscoreToCamelCase 를 통해서 자동으로 mybatis 에 의해 자바 필드 표현으로 변경됨. -->
+	<select id="listEmp" resultType="com.mycom.myapp.dto.EmpDto">
+		select employeeId, first_name, last_name, email, hire_date from emp;
+	</select>
+	
+	<select id="detailEmp" resultType="com.mycom.myapp.dto.EmpDto" parameterType="int">
+		select employeeId, first_name, last_name, email, hire_date
+		  from emp
+		 where employeeId = #{employeeId};
+	</select>
+	
+	<!-- return type primitive tpye 은 일반적으로 생략 -->
+	<insert id="insertEmp" parameterType="com.mycom.myapp.dto.EmpDto">
+		insert into emp (   employeeId, first_name, last_name, email, hire_date )
+		           values (#{employeeId}, #{firstName}, #{lastName}, #{email}, ${hireDate});
+	</insert>
+	
+	<update id="updateEmp" parameterType="com.mycom.myapp.dto.EmpDto">
+		update emp
+		   set first_name 	=  	#{firstName},
+		       last_name 	= 	#{lastName},
+		       email 		= 	#{email},
+		       hire_date 	=  	#{hireDate}
+		 where employeeId 	= 	#{employeeId};
+	</update>
+	
+	<delete id="deleteEmp" parameterType="int">
+		delete from emp where employeeId = #{employeeId};
+	</delete>
+</mapper>  

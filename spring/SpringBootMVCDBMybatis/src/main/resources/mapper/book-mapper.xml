@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.mycom.myapp.dao.BookDao">
+
+	<select id="listBook" resultType="com.mycom.myapp.dto.BookDto">
+		select bookid bookId, bookname bookName, publisher, price from book;
+	</select>
+	
+	<select id="detailBook" resultType="com.mycom.myapp.dto.BookDto" parameterType="int">
+		select bookid bookId, bookname bookName, publisher, price 
+		  from book
+		 where bookid = #{bookId};
+	</select>
+	
+	<!-- return type primitive tpye 은 일반적으로 생략 -->
+	<insert id="insertBook" parameterType="com.mycom.myapp.dto.BookDto">
+		insert into book (   bookid,    bookname,    publisher,    price )
+		           values (#{bookId}, #{bookName}, #{publisher}, #{price});
+	</insert>
+	
+	<update id="updateBook" parameterType="com.mycom.myapp.dto.BookDto">
+		update book
+		   set bookname =  #{bookName},
+		       publisher = #{publisher},
+		       price =     #{price}
+		 where bookid =    #{bookId};
+	</update>
+	
+	<delete id="deleteBook" parameterType="int">
+		delete from book where bookid = #{bookId};
+	</delete>
+</mapper>  
