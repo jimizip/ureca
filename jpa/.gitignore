@@ -1,0 +1,32 @@
+# Maven
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Eclipse / STS
+.settings/
+.classpath
+.project
+.factorypath
+bin/
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# H2 / DB files
+*.db
+*.mv.db
+*.trace.db
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
