@@ -2,6 +2,7 @@ package com.mycom.myapp.board.controller;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.mycom.myapp.board.dto.BoardResultDto;
 import com.mycom.myapp.board.service.BoardService;
 import com.mycom.myapp.user.dto.UserDto;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -47,6 +49,11 @@ public class BoardController {
 	@GetMapping("/detail/{boardId}")
 	public BoardResultDto detailBoard(@PathVariable Integer boardId, HttpSession session) {
 		BoardResultDto boardResultDto = null;
+		
+		// NullPointerException
+		String s = null;
+		s.length();
+		
 		// 메소드의 파라미터에 BoardParamDto 를 사용하지 않는 이유.
 		// 게시글 상세 처리 외, 조회수처리를 위해서 현재 글을 조회하는 사용자의 userSeq 가 필요.
 		// 이 userSeq 는 프론트 javascript 로 전달 X
@@ -80,6 +87,13 @@ public class BoardController {
 	public BoardResultDto deleteBoard(@PathVariable Integer boardId) {
 		return boardService.deleteBoard(boardId);
 	}
+	
+	// 데이터 요청에 대한 오류 예외 처리
+	// 아래 예외처리가 다른 데이터 요청 Controller 모두에게 일괄적용한다면 한곳에서 처리하는 게 더 효율적
+//	@ExceptionHandler(Exception.class) // 이 컨트롤러에서 발생하는 모든 예외는 이곳에서 처리
+//	public void pageExceptionHandler(HttpServletResponse response) throws Exception{
+//		response.getWriter().write("{\"result\":\"fail\"}");
+//	}	
 }
 
 

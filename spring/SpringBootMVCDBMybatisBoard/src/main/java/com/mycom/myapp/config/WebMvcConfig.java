@@ -25,6 +25,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 						"/index.html",
 						"/assets/**",
 						"/pages/register", 
+						"/users/register",
 						"/pages/login",
 						"/auth/login"
 				);

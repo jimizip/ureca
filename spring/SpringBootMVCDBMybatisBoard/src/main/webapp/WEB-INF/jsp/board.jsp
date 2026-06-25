@@ -252,10 +252,15 @@
 		
 		// 목록
 		async function listBoard(){
+			let fetchOptions = {
+				headers:{
+					ajax: "true"
+				}
+			}
 			
 			let url = "/boards/list";
 			let urlParams = "?limit=" + LIST_ROW_COUNT + "&offset=" + OFFSET + "&searchWord=" + SEARCH_WORD;
-			let response = await fetch(url + urlParams);
+			let response = await fetch(url + urlParams, fetchOptions);
 			let data = await response.json();
 			
 			console.log(data);		
@@ -265,7 +270,11 @@
 				makeListHtml(data.list);
 				TOTAL_LIST_COUNT = data.count;
 				addPagination();
-			}		
+			}else if( data.result == "login" ){ // json 요청의 응답이 login 일 때 로그인 페이지로 이동
+				window.location.href = "/pages/login"; // 페이지 요청
+			}else if( data.result == "fail" ){ // json 요청의 응답이 fail
+				alert("글 목록 조회 중 오류가 발생했습니다.");
+			}	
 		}
 		
 		function makeListHtml(list){
@@ -321,8 +330,14 @@
 		
 		// 상세
 		async function detailBoard(boardId){
+			let fetchOptions = {
+				headers:{
+					ajax: "true"
+				}
+			}
+						
 			let url = "/boards/detail/" + boardId;
-			let response = await fetch(url);
+			let response = await fetch(url, fetchOptions);
 			let data = await response.json();
 
 			console.log(data);		
@@ -330,6 +345,10 @@
 			if( data.result == "success" ){			
 				// data -> html
 				makeDetailHtml(data.dto);
+			}else if( data.result == "login" ){ // json 요청의 응답이 login 일 때 로그인 페이지로 이동
+				window.location.href = "/pages/login"; // 페이지 요청
+			}else if( data.result == "fail" ){ // json 요청의 응답이 fail
+				alert("글 상세 조회 중 오류가 발생했습니다.");
 			}	
 		}	
 				
@@ -370,6 +389,9 @@
 			});
 			
 			let fetchOptions = {
+				headers:{
+					ajax: "true"
+				},				
 				method: "post",
 				body: urlParams
 			}
@@ -384,6 +406,10 @@
 				alert("글이 등록되었습니다.");
 				// 목록
 				listBoard();
+			}else if( data.result == "login" ){ // json 요청의 응답이 login 일 때 로그인 페이지로 이동
+				window.location.href = "/pages/login"; // 페이지 요청
+			}else if( data.result == "fail" ){ // json 요청의 응답이 fail
+				alert("글 등록 중 오류가 발생했습니다.");
 			}	
 			
 			// 모달 닫기
@@ -403,7 +429,10 @@
 				content: document.querySelector("#contentUpdate").value
 			});
 			
-			let fetchOptions = {			
+			let fetchOptions = {
+				headers:{
+					ajax: "true"
+				},							
 				method: "post",
 				body: urlParams
 			}
@@ -418,7 +447,11 @@
 				alert("글이 수정되었습니다.");
 				// 목록
 				listBoard();
-			}
+			}else if( data.result == "login" ){ // json 요청의 응답이 login 일 때 로그인 페이지로 이동
+				window.location.href = "/pages/login"; // 페이지 요청
+			}else if( data.result == "fail" ){ // json 요청의 응답이 fail
+				alert("글 수정 중 오류가 발생했습니다.");
+			}	
 			
 			// 모달 창 닫기
 			updateModal.hide();		
@@ -428,11 +461,16 @@
 		// get
 		// boardId 전달
 		async function deleteBoard(){
-			
+			let fetchOptions = {
+				headers:{
+					ajax: "true"
+				}
+			}
+						
 			let boardId = document.querySelector("#detailBoardModal").getAttribute("data-boardId");
 
 			let url = "/boards/delete/" + boardId
-			let response = await fetch(url);
+			let response = await fetch(url, fetchOptions);
 			let data = await response.json();
 			
 			console.log(data);
@@ -443,7 +481,11 @@
 				
 				// 목록
 				listBoard();
-			}
+			}else if( data.result == "login" ){ // json 요청의 응답이 login 일 때 로그인 페이지로 이동
+				window.location.href = "/pages/login"; // 페이지 요청
+			}else if( data.result == "fail" ){ // json 요청의 응답이 fail
+				alert("글 삭제 중 오류가 발생했습니다.");
+			}	
 			
 			// 모달 창 닫기
 			detailModal.hide();		
