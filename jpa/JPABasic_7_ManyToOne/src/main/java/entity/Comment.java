@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,7 +22,10 @@ public class Comment {
 //	@ManyToOne
 //	private Post post;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+//	@ManyToOne(cascade=CascadeType.PERSIST)
+//	private Post post;
+	
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
 	private Post post;
 
 	public int getId() {
@@ -48,8 +52,14 @@ public class Comment {
 		this.post = post;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Comment [id=" + id + ", contetent=" + contetent + ", post=" + post + "]";
+//	}
+	
+	// post 제외
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", contetent=" + contetent + ", post=" + post + "]";
+		return "Comment [id=" + id + ", contetent=" + contetent + "]";
 	}
 }
